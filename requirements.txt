@@ -8,3 +8,7 @@ numpy
 opencv-python
 supervision
 pycocotools
+onnx
+tqdm
+pillow
+opencv-python

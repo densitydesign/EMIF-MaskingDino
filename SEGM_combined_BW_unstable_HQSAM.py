@@ -41,8 +41,8 @@ def createBoxes(image_path, text_prompt, box_threshold, token_spans=None):
     print("You are using a threshold of:", box_threshold)
     print("You are using a prompt:", text_prompt)
 
-    model = load_model("groundingdino/config/GroundingDINO_SwinB_cfg.py",
-                       "weights/groundingdino_swinb_cogcoor.pth",
+    model = load_model("/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking/GroundingDINO_SwinB_cfg.py",
+                       "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking/groundingdino_swinb_cogcoor.pth",
                        device=device)  
 
     image_source, image = load_image(image_path)
@@ -75,7 +75,7 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
                   bypass_filling = False,
                   ):
     
-    sam_checkpoint = "samHq/models/sam_hq_vit_h.pth"
+    sam_checkpoint = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking/sam_hq_vit_h.pth"
     model_type = "vit_h"
     device = "mps"
 
@@ -235,8 +235,8 @@ def process_images(root_folder, output_folder, start_from_zero=True):
 # Define root folder for input images and output folder for results
 log_file = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/process_log.txt'
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s %(message)s')
-root_folder = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DEF_MOCKUP_LIBRI/DB_IMMAGINI/" #FILE INPUT
-output_folder = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DEF_MOCKUP_LIBRI/DB_MASCHERE" #SALVATAAGGIO MASCHERE
+root_folder = "/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_SD_IMAGES" #FILE INPUT
+output_folder = "/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_SD_MASCHERE" #SALVATAAGGIO MASCHERE
 
 # Process images with refinement enabled
 process_images(root_folder, output_folder, start_from_zero=True)
