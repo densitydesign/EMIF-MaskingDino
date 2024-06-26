@@ -110,7 +110,6 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
     input_boxes = torch.tensor(boxes_xyxy, device=predictor.device)
     transformed_boxes = predictor.transform.apply_boxes_torch(input_boxes, image.shape[:2])
 
-    #print("first step begin:")
     with torch.no_grad():
         masks_refined, _, _ = predictor.predict_torch(
             point_coords=None,
@@ -126,8 +125,6 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
         masks_refined = masks_refined.squeeze(1)
         true_false_mask = np.any(masks_refined, axis=0)
         grayscale_mask = true_false_mask.astype(np.uint8) * 255
-
-    #print("second step done:", masks_refined)
 
     if bypass_filling:
         bw_mask = grayscale_mask.astype(np.uint8)
@@ -153,8 +150,6 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
         filled_mask = cv2.bitwise_not(filled_mask_with_contours)
         final_mask = cv2.bitwise_not(filled_mask)
         bw_mask = final_mask.astype(np.uint8)
-        
-        print("Refined done")
 
     #Measure mask
     height, width = bw_mask.shape[:2]
@@ -206,14 +201,14 @@ def process_images(root_folder, output_folder, start_from_zero=True):
     # Count the total number of images first
     total_images = sum(len(files)
         for _, _, files in os.walk(root_folder)
-        if any(file.lower().endswith(('.png', '.jpg', '.jpeg')) for file in files))
+        if any(file.lower().endswith(('.png', '.jpg', '.jpeg', '.JPG')) for file in files))
 
     with tqdm(total=total_images * len(text_prompts), desc="Processing Images") as pbar:
         for text_prompt, box_threshold in text_prompts.items():  # Get threshold value for each prompt
             for subdir, _, files in os.walk(root_folder):
                 files.sort()  # Sort files in alphabetical order
                 for file in files:
-                    if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                    if file.lower().endswith(('.png', '.jpg', '.jpeg', '.JPG')):
                         input_image_path = os.path.join(subdir, file)
 
                         # Skip files that have already been processed
