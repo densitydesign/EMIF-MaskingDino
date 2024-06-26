@@ -13,6 +13,7 @@ This repo is meant to highlight how to combine GroundingDino and Segment-Anythin
 - [Acknowledgements](#acknowledgements)
 
 ## Script working scheme
+![GIT FRAME](https://github.com/densitydesign/EMIF-MaskingDino/assets/33348451/14eac25a-8e80-4edc-9315-30677331b9d9)
 
 ## Introduction
 GroundingDino is a tool meant to produce boxes and relevations on images based on textual prompts. As of now, I managed to make it work with single words only rather than combinations of them, but that's upcoming. Segment-Anything by Meta is a tool to make segmentations on images. The combination of these two works effectively as SAM can take boxes as inputs and detect the corresponding objects inside them.
