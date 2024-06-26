@@ -12,6 +12,8 @@ This repo is meant to highlight how to combine GroundingDino and Segment-Anythin
 - [Features](#features)
 - [Acknowledgements](#acknowledgements)
 
+## Script working scheme
+
 ## Introduction
 GroundingDino is a tool meant to produce boxes and relevations on images based on textual prompts. As of now, I managed to make it work with single words only rather than combinations of them, but that's upcoming. Segment-Anything by Meta is a tool to make segmentations on images. The combination of these two works effectively as SAM can take boxes as inputs and detect the corresponding objects inside them.
 
@@ -21,21 +23,21 @@ The transformers code has been updated following the tweak in this medium articl
 MaskingDino has a pretty simple installation. We recommend using `venv` or `conda env` to isolate it.
 Disclaimer: Everything was tested on Apple Silicon Macs, we don't know the performances on Windows or non-ARM environments.
 
-1. Clone the GitHub repository:
+[1.] Clone the GitHub repository:
     ```bash
     cd yourfolder_path
     git clone https://github.com/densitydesign/EMIF-MaskingDino.git
     ```
-2. Create the virtual environment with Python >= 3.9.
-3. Activate the environment
-4. Install the requirements:
+[2.] Create the virtual environment with Python >= 3.9.
+[3.] Activate the environment
+[4.] Install the requirements:
     ```bash
     cd EMIF-MASKINGDINO
     pip install -r requirements.txt
     ```
-5. Open `PROMPT_TO_MASK_hq.py` and change the variable `global_folder` with the actual folder-path of your project folder.
-6. Inside your `global_folder` create a folder with your images, named `INPUT_IMAGES`
-7. The final folder structure should be like:
+[5.] Open `PROMPT_TO_MASK_hq.py` and change the variable `global_folder` with the actual folder-path of your project folder.
+[6.] Inside your `global_folder` create a folder with your images, named `INPUT_IMAGES`
+[7.] The final folder structure should be like:
 
 ```
 global_folder/
@@ -46,13 +48,15 @@ global_folder/
     `-- ...
 ```
 
-8. [Download](https://drive.google.com/file/d/1oefY5ivTvh35CkiGuVMLRLB30PC3Pao0/view?usp=drive_link) the model folder
-9. Open `PROMPT_TO_MASK_hq.py` and change the variable `model_folder` with the actual folder-path of your downloaded model folder.
-10. Open `text_prompts.py` and update the list of objects you want to extract from images, more info below.
-11. Run: ```bash
-        export PYTORCH_ENABLE_MPS_FALLBACK=1
-    ```
-12. Execute the script by `python PROMPT_TO_MASK_hq.py`
+[8.] [Download](https://drive.google.com/file/d/1oefY5ivTvh35CkiGuVMLRLB30PC3Pao0/view?usp=drive_link) the model folder
+[9.] Open `PROMPT_TO_MASK_hq.py` and change the variable `model_folder` with the actual folder-path of your downloaded model folder.
+[10.] Open `text_prompts.py` and update the list of objects you want to extract from images, more info below.
+[11.] Run:
+```bash
+export PYTORCH_ENABLE_MPS_FALLBACK=1
+```
+
+[12.] Execute the script by `python PROMPT_TO_MASK_hq.py`
 
 ## Text Prompts
 As mentioned, the whole process relies on textual prompting for cut-outting.
@@ -66,7 +70,6 @@ text_prompts = {
     "hair": 0.25,
     "cap": 0.20,
 }
-
 ```
 
 This file is just an object containing a list. This list will define what to detect and how precise to be about its detection.
