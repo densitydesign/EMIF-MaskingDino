@@ -30,35 +30,42 @@ Disclaimer: Everything was tested on Apple Silicon Macs, we don't know the perfo
     git clone https://github.com/densitydesign/EMIF-MaskingDino.git
     ```
 2. Create the virtual environment with Python >= 3.9.
-3. Install the requirements:
+3. Activate the environment
+4. Install the requirements:
     ```bash
+    cd EMIF-MASKINGDINO
     pip install -r requirements.txt
     ```
-4. Prepare the folder with images, change your `global_folder` path in the `PROMPT_TO_MASK_hq.py`.
+5. Open `PROMPT_TO_MASK_hq.py` and change the variable `global_folder` with the actual folder-path of your project folder.
+6. Inside your `global_folder` create a folder with your images, named `INPUT_IMAGES`
+7. The final folder structure should be like:
 
-## GroundingDino Preparation
-
-Firstly, we define our `global_folder`. The `global_folder` is the one containing everything, including the folder of inputs and the folder of outputs.
-
-The `model_folder` is an external folder containing the models for the whole process; it's not integrated into the repo as it's definitely too heavy.
-
-### Preparing the Folder
-
-```python
-global_folder = "your_global_path"  # substitute with your root path
-model_folder = 'your_model_folder'
-
-root_folder = f'{global_folder}/DB_SD_IMAGES'  # FILE INPUT
-output_folder = f'/{global_folder}/DEBUG_MASKS'  # MASK OUTPUT
+```
+global_folder/
+|-- root_folder/
+|   |-- img_cat_1/
+|   |   |-- img_1
+|   |   |-- img_2
+|   |   `-- ...
+|   `-- img_cat_2/
+|       |-- img_1
+|       `-- img_2
+`-- output_folder/
+    |-- mask_cat_1/
+    |   |-- mask_1
+    |   `-- mask_2
+    `-- mask_cat_2/
+        |-- mask_1
+        `-- mask_2
 ```
 
-Apart from the logfile itself, the script is set up to take images from the `root_folder` and output the results to the `output_folder`. The second one will be created automatically if not yet present, while the root must obviously be present.
-
-As mentioned, the final structure of files will mimic the one of the `root_folder`.
+8. [Download](https://drive.google.com/drive/folders/1Chf3b05TFFLnpKsX8sb-DJlvugQnnzuV?usp=sharing) the model folder
+9. Open `PROMPT_TO_MASK_hq.py` and change the variable `model_folder` with the actual folder-path of your downloaded model folder.
+10. Open `text_prompts.py` and update the list of objects you want to extract from images, more info below.
 
 ## Text Prompts
-
-As mentioned, the whole process relies on textual prompting for cut-outting. Therefore, in the file `text_prompts.py`, we must organize what we actually want to be detected and cut out.
+As mentioned, the whole process relies on textual prompting for cut-outting.
+Therefore, in the file `text_prompts.py`, we must organize what we actually want to be detected and cut out.
 
 ```python
 text_prompts = {
@@ -74,27 +81,7 @@ This file is just an object containing a list. This list will define what to det
 
 The numbers on the right are the detection threshold; the higher, the stricter. We don't recommend going higher than 0.30 and we recommend keeping values around 0.16-0.25 to provide a wide set of detection possibilities.
 
-The script is prepared to work iteratively on this list of items. So if we have 30 images and 3 text prompts declared, it will run these 3 prompts on these 30 images, producing 90 separate outputs.
-
-#### Folder structure
-
-```
-YOUR GLOBAL FOLDER/
-|-- root_folder/
-|   |-- img_cat_1/
-|   |   |-- img_1
-|   |   `-- img_2
-|   `-- img_cat_2/
-|       |-- img_1
-|       `-- img_2
-`-- output_folder/
-    |-- mask_cat_1/
-    |   |-- mask_1
-    |   `-- mask_2
-    `-- mask_cat_2/
-        |-- mask_1
-        `-- mask_2
-```
+The script is prepared to work **iteratively** on this list of items. So if we have 30 images and 3 text prompts declared, it will run these 3 prompts on these 30 images, producing 90 separate outputs.
 
 ## Features
 
