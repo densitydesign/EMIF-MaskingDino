@@ -42,26 +42,21 @@ Disclaimer: Everything was tested on Apple Silicon Macs, we don't know the perfo
 
 ```
 global_folder/
-|-- root_folder/
-|   |-- img_cat_1/
-|   |   |-- img_1
-|   |   |-- img_2
-|   |   `-- ...
-|   `-- img_cat_2/
-|       |-- img_1
-|       `-- img_2
-`-- output_folder/
-    |-- mask_cat_1/
-    |   |-- mask_1
-    |   `-- mask_2
-    `-- mask_cat_2/
-        |-- mask_1
-        `-- mask_2
+|-- INPUT_IMAGES/
+    |-- img_cat_1/
+    |   |-- img_1
+    |   |-- img_2
+    |   `-- ...
+    `-- img_cat_2/
+        |-- img_1
+        `-- img_2
+
 ```
 
 8. [Download](https://drive.google.com/drive/folders/1Chf3b05TFFLnpKsX8sb-DJlvugQnnzuV?usp=sharing) the model folder
 9. Open `PROMPT_TO_MASK_hq.py` and change the variable `model_folder` with the actual folder-path of your downloaded model folder.
 10. Open `text_prompts.py` and update the list of objects you want to extract from images, more info below.
+11. Execute the script by `python PROMPT_TO_MASK_hq.py`
 
 ## Text Prompts
 As mentioned, the whole process relies on textual prompting for cut-outting.
