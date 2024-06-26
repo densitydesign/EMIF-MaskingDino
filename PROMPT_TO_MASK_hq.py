@@ -26,15 +26,20 @@ from samHq.segment_anything import sam_model_registry, SamPredictor
 
 from torchvision.ops import box_convert
 
-# Suppress specific warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=FutureWarning)
 warnings.filterwarnings("ignore", message=".*annotate is deprecated*")
 
+################## WELCOME TO THE ACTUAL TOOL ##################
+
+
 device = torch.device("mps" if torch.has_mps else "cpu")
+
 print("Your current device is:", device)
+
 TEXT_THRESHOLD = 0.35
-model_folder = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking'
+global_folder = "your_global_path"  #substitute with your root path
+model_folder = 'your_model_folder'
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
@@ -234,10 +239,10 @@ def process_images(root_folder, output_folder, start_from_zero=True):
 
 
 # Define root folder for input images and output folder for results
-log_file = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/process_log.txt'
+log_file = f'{global_folder}/process_log.txt'
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s %(message)s')
-root_folder = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DB_SD_IMAGES" #FILE INPUT
-output_folder = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DEBUG_MASKS" #MAKS OUTPUT
+root_folder = f'{global_folder}/DB_SD_IMAGES' #FILE INPUT
+output_folder = f'/{global_folder}/DEBUG_MASKS' #MAKS OUTPUT
 
 # Process images with refinement enabled
 process_images(root_folder, output_folder, start_from_zero=True)
