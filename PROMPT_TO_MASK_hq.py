@@ -1,4 +1,4 @@
-#THIS IS SEGM_COMBINED_BW_UNSTABLE.PY
+#THIS IS SEGM_COMBINED_BW_UNSTABLE.PY, currently its the state-of-the-art
 
 #Add export PYTORCH_ENABLE_MPS_FALLBACK=1 if bugging w/ mps
 
@@ -34,6 +34,7 @@ warnings.filterwarnings("ignore", message=".*annotate is deprecated*")
 device = torch.device("mps" if torch.has_mps else "cpu")
 print("Your current device is:", device)
 TEXT_THRESHOLD = 0.35
+model_folder = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking'
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
@@ -41,8 +42,8 @@ def createBoxes(image_path, text_prompt, box_threshold, token_spans=None):
     print("You are using a threshold of:", box_threshold)
     print("You are using a prompt:", text_prompt)
 
-    model = load_model("/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking/GroundingDINO_SwinB_cfg.py",
-                       "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking/groundingdino_swinb_cogcoor.pth",
+    model = load_model(f"{model_folder}/GroundingDINO_SwinB_cfg.py",
+                       f"{model_folder}/groundingdino_swinb_cogcoor.pth",
                        device=device)  
 
     image_source, image = load_image(image_path)
@@ -75,7 +76,7 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
                   bypass_filling = False,
                   ):
     
-    sam_checkpoint = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF-ModelForMasking/sam_hq_vit_h.pth"
+    sam_checkpoint = f"{model_folder}/sam_hq_vit_h.pth"
     model_type = "vit_h"
     device = "mps"
 
@@ -235,8 +236,8 @@ def process_images(root_folder, output_folder, start_from_zero=True):
 # Define root folder for input images and output folder for results
 log_file = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/process_log.txt'
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s %(message)s')
-root_folder = "/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_SD_IMAGES" #FILE INPUT
-output_folder = "/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_SD_MASCHERE" #SALVATAAGGIO MASCHERE
+root_folder = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DB_SD_IMAGES" #FILE INPUT
+output_folder = "/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DEBUG_MASKS" #MAKS OUTPUT
 
 # Process images with refinement enabled
 process_images(root_folder, output_folder, start_from_zero=True)

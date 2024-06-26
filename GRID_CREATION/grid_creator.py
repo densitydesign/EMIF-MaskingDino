@@ -1,17 +1,19 @@
+#THIS SCRIPT IS RESPONSIBLE FOR THE CREATION OF GRIDS
+
 import os
 from PIL import Image
 from tqdm import tqdm
 import re
 
-root_dir = '/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_SD_IMAGES'
-output_dir = '/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_GRIDS'
-grid_gap = 100
+root_dir = '/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_SD_MASCHERE' #CHANGE ACCORDINGLY
+output_dir = '/Volumes/Cartella pubblica di Tommaso Prinetti/EMIF_CUTOUT/DB_GRIDS' #CHANGE ACCORDINGLY
+grid_gap = 100 #CHANGE ACCORDINGLY
 
 def find_images(root_dir, keywords):
     image_dict = {keyword: [] for keyword in keywords}
     nation_category_dict = {keyword: {} for keyword in keywords}
-    nation_pattern = r"(Italy|Croatia|Cyprus|Portugal|Romania|Slovakian|Ukraine|Estonia|Czech|Ukranian|)"
-    category_pattern = r"(family|working)"
+    nation_pattern = r"(Italy|Croatia|Cyprus|Portugal|Romania|Slovakia|Ukraine|Estonia|Czech|Greece)" #CHANGE ACCORDINGLY
+    category_pattern = r"(family|working)" #CHANGE ACCORDINGLY
     
     for subdir, _, files in os.walk(root_dir):
         for file in files:
@@ -99,5 +101,5 @@ def create_image_grids(root_dir, keywords, grid_size=(6, 6), output_dir=output_d
                         print(f"Error saving grid image {grid_output_path}: {e}")
 
 if __name__ == "__main__":
-    keywords = ['',]  # Add more keywords as needed
+    keywords = [ 'clothes', 'hair', 'objects', 'person']
     create_image_grids(root_dir, keywords)
