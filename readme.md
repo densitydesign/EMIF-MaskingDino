@@ -35,7 +35,6 @@ Disclaimer: Everything was tested on Apple Silicon Macs, we don't know the perfo
     pip install -r requirements.txt
     ```
 4. Prepare the folder with images, change your `global_folder` path in the `PROMPT_TO_MASK_hq.py`.
-5. Run the script.
 
 ## GroundingDino Preparation
 
@@ -76,6 +75,26 @@ This file is just an object containing a list. This list will define what to det
 The numbers on the right are the detection threshold; the higher, the stricter. We don't recommend going higher than 0.30 and we recommend keeping values around 0.16-0.25 to provide a wide set of detection possibilities.
 
 The script is prepared to work iteratively on this list of items. So if we have 30 images and 3 text prompts declared, it will run these 3 prompts on these 30 images, producing 90 separate outputs.
+
+#### Folder structure
+
+```
+YOUR GLOBAL FOLDER/
+|-- root_folder/
+|   |-- img_cat_1/
+|   |   |-- img_1
+|   |   `-- img_2
+|   `-- img_cat_2/
+|       |-- img_1
+|       `-- img_2
+`-- output_folder/
+    |-- mask_cat_1/
+    |   |-- mask_1
+    |   `-- mask_2
+    `-- mask_cat_2/
+        |-- mask_1
+        `-- mask_2
+```
 
 ## Features
 
