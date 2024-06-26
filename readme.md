@@ -40,17 +40,13 @@ Disclaimer: Everything was tested on Apple Silicon Macs, we don't know the perfo
 ```
 global_folder/
 |-- INPUT_IMAGES/
-    |-- img_cat_1/
-    |   |-- img_1
-    |   |-- img_2
-    |   `-- ...
-    `-- img_cat_2/
-        |-- img_1
-        `-- img_2
-
+    |-- img_1
+    |-- img_2
+    |-- img_3
+    `-- ...
 ```
 
-8. [Download](https://drive.google.com/drive/folders/1Chf3b05TFFLnpKsX8sb-DJlvugQnnzuV?usp=sharing) the model folder
+8. [Download](https://drive.google.com/file/d/1oefY5ivTvh35CkiGuVMLRLB30PC3Pao0/view?usp=drive_link) the model folder
 9. Open `PROMPT_TO_MASK_hq.py` and change the variable `model_folder` with the actual folder-path of your downloaded model folder.
 10. Open `text_prompts.py` and update the list of objects you want to extract from images, more info below.
 11. Run: ```bash
@@ -219,6 +215,14 @@ else:
 ```
 
 Then we post-process the mask we produced by making hole filling and morphology operators with OpenCv2.
+
+```python
+# Parameters
+        kernel_size = 10
+        blur_kernel_size = 5
+```
+
+These parameters change the morphology operations on the BW image
 
 The rest of the code is execution.
 

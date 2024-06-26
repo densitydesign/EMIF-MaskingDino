@@ -40,8 +40,8 @@ device = torch.device("mps" if torch.has_mps else "cpu")
 print("Your current device is:", device)
 
 TEXT_THRESHOLD = 0.35
-global_folder = 'your_global_folder_path'  #substitute with your root path
-model_folder = 'your_model_folder_path'
+global_folder = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/DEBUG'  #substitute with your root path
+model_folder = '/Users/tommasoprinetti/Documents/DENSITY_OFFICE/EMIF/EMIF-ModelForMasking'
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
@@ -152,11 +152,28 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
         filled_mask = cv2.bitwise_not(filled_mask_with_contours)
         final_mask = cv2.bitwise_not(filled_mask)
         bw_mask = final_mask.astype(np.uint8)
+        bw_mask = cv2.GaussianBlur(bw_mask, (5, 5), 0)
+
+        height, width = bw_mask.shape[:2]
+        print("Final Mask dimensions:", width, "x", height)
+
+    # Load the original image
+    original_image = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
 
     #Measure mask
-    height, width = bw_mask.shape[:2]
-    print("Final Mask dimensions:", width, "x", height)
+    height, width = original_image.shape[:2]
+    print("Original img dimensions:", width, "x", height)
 
+    # Check if the original image has an alpha channel
+    if original_image.shape[2] == 3:
+        alpha_channel = np.ones((height, width), dtype=original_image.dtype) * 255
+        original_image = cv2.merge((original_image, alpha_channel))
+
+    # Apply the B/W mask as a boolean mask to the alpha channel
+    alpha_channel = original_image[:, :, 3]
+    alpha_channel[bw_mask == 0] = 0
+    original_image[:, :, 3] = alpha_channel
+    
     # Ensure the output folder exists
     os.makedirs(output_folder, exist_ok=True)
 
@@ -170,10 +187,14 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
     # Extract the first word with more than three characters from TEXT_PROMPT
     prompt_word = next((word for word in text_prompt.split() if len(word) > 3), "prompt")
 
-    # Save the B/W mask image
-    bw_mask_output_path = os.path.join(image_output_folder, f"{base_filename}_{prompt_word}_mask.png")
-    cv2.imwrite(bw_mask_output_path, bw_mask, [cv2.IMWRITE_PNG_COMPRESSION, 5])
-    print("B/W mask saved to:", bw_mask_output_path)
+    # Save the cutout image
+    cutout_output_path = os.path.join(image_output_folder, f"{base_filename}_{prompt_word}_cutout.png")
+    cv2.imwrite(cutout_output_path, original_image, [
+        int(cv2.IMWRITE_PNG_COMPRESSION), 9,
+        cv2.IMWRITE_PNG_STRATEGY, cv2.IMWRITE_PNG_STRATEGY_RLE,
+        cv2.IMWRITE_PNG_STRATEGY, cv2.IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY
+    ])
+    print("Cutout image saved to:", cutout_output_path)
 
 def get_last_processed_image(log_file):
     try:
