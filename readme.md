@@ -1,4 +1,3 @@
-```markdown
 # EMIF MASKINGDINO
 
 ## This tool is called MaskingDino and it's meant to produce BW binary masks / straight cut-out based on a semantic prompt
