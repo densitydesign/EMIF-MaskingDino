@@ -5,10 +5,14 @@
 This repo is meant to highlight how to combine GroundingDino and Segment-Anything official repositories to create a unified system able to produce a boolean mask based on a textual prompt. The provided code is a working demo that can be implemented as a tool.
 
 # Colab version of this:
+![Static Badge](https://img.shields.io/badge/Prompt_to_mask-ultimate?style=flat&logo=googlecolab&logoColor=%23F9AB00&labelColor=%23000000&color=%2300A8F0)
 
-We've released a Colab version of this tool that's accessible at: [This awesome link](https://colab.research.google.com/drive/1iRw23Lt2s3mj0t5jjWFZj6z_hrWUassg?usp=sharing). Usage with GPU is suggested.
+We've released a Colab version of this tool. Usage with GPU is suggested.
 
-<img src="https://media.tenor.com/xJSM2Ky3WpgAAAAM/steve-ballmer-microsoft.gif" width="300" />
+<img src="https://media.tenor.com/xJSM2Ky3WpgAAAAM/steve-ballmer-microsoft.gif" width="100" />
+
+
+
 
 ## Table of Contents
 - [Introduction](#introduction)
