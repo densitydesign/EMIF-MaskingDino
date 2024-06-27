@@ -246,21 +246,25 @@ class Transformer(nn.Module):
             spatial_shapes, dtype=torch.long, device=src_flatten.device
         )
 
-        #########################################################
-        # BEGIN CUSTOM CHANGES FOR MPS
-
-        if (src_flatten.device.type == "mps" ):
+        if torch.cuda.is_available():
+            ############  CUDA  ###########################################
+            level_start_index = torch.cat(
+                (spatial_shapes.new_zeros((1,)), spatial_shapes.prod(1).cumsum(0)[:-1])
+            )
+        elif torch.backends.mps.is_available():
+            #########################################################
+            # BEGIN CUSTOM CHANGES FOR MPS
             spatial_shape_cumsum = spatial_shapes.prod(1).to(torch.int32).cumsum(0)[:-1]
-
+            level_start_index = torch.cat(
+                (spatial_shapes.new_zeros((1,)), spatial_shape_cumsum)
+            )
+            # END CUSTOM CHANGES FOR MPS
+            #########################################################
         else:
-            spatial_shape_cumsum = spatial_shapes.prod(1).cumsum(0)[:-1]
-
-        level_start_index = torch.cat(
-            (spatial_shapes.new_zeros((1,)), spatial_shape_cumsum)
-        )
-        
-        # END CUSTOM CHANGES FOR MPS
-        #########################################################
+            ############  CPU  ###########################################
+            level_start_index = torch.cat(
+                (spatial_shapes.new_zeros((1,)), spatial_shapes.prod(1).cumsum(0)[:-1])
+            )
 
         valid_ratios = torch.stack([self.get_valid_ratio(m) for m in masks], 1)
 

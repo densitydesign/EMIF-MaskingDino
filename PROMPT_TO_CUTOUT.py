@@ -89,7 +89,13 @@ def extractImages(boxes_xyxy, image_path, text_prompt,
     
     sam_checkpoint = f"{model_folder}/sam_hq_vit_h.pth"
     model_type = "vit_h"
-    device = "mps"
+
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+    elif torch.backends.mps.is_available():
+        device = torch.device('mps')
+    else:
+        device = torch.device('cpu')
 
     sam = sam_model_registry[model_type](checkpoint=sam_checkpoint)
     sam.to(device=device)
