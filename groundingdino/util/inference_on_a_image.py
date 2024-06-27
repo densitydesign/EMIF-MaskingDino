@@ -74,10 +74,22 @@ def load_image(image_path):
 
 
 def load_model(model_config_path, model_checkpoint_path, cpu_only=False):
+
+    if torch.cuda.is_available():
+        device = torch.device('cuda')
+    elif torch.backends.mps.is_available():
+        device = torch.device('mps')
+    else:
+        device = torch.device('cpu')
+    
     args = SLConfig.fromfile(model_config_path)
-    args.device = "mps" if not cpu_only else "cpu"
+
+    args.device = device if not cpu_only else device
     model = build_model(args)
-    checkpoint = torch.load(model_checkpoint_path, map_location="mps")
+
+    checkpoint = torch.load(model_checkpoint_path, map_location=device)
+
+
     load_res = model.load_state_dict(clean_state_dict(checkpoint["model"]), strict=False)
     print(load_res)
     _ = model.eval()
@@ -97,7 +109,15 @@ def get_grounding_output(model,
     caption = caption.strip()
     if not caption.endswith("."):
         caption = caption + "."
-    device = "mps" if not cpu_only else "mps"
+
+    if torch.cuda.is_available():
+        device = 'cuda'
+    elif torch.backends.mps.is_available():
+        device = 'mps'
+    else:
+        device = 'cpu'
+
+    device = device
     model = model.to(device)
     image = image.to(device)
     with torch.no_grad():
