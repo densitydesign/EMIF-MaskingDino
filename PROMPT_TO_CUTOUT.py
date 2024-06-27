@@ -1,4 +1,4 @@
-#THIS IS SEGM_COMBINED_BW_UNSTABLE.PY, currently its the state-of-the-art
+#its the state-of-the-art
 
 #Add export PYTORCH_ENABLE_MPS_FALLBACK=1 if bugging w/ mps
 
@@ -49,7 +49,7 @@ def createBoxes(image_path, text_prompt, box_threshold, token_spans=None):
     print("You are using a threshold of:", box_threshold)
     print("You are using a prompt:", text_prompt)
 
-    model = load_model(f"{model_folder}/GroundingDINO_SwinB_cfg.py",
+    model = load_model("weights/GroundingDINO_SwinB_cfg.py",
                        f"{model_folder}/groundingdino_swinb_cogcoor.pth",
                        device=device)  
 
