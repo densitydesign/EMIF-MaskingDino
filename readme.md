@@ -7,7 +7,10 @@ This repo is meant to highlight how to combine GroundingDino and Segment-Anythin
 # Colab version of this:
 ![Static Badge](https://img.shields.io/badge/Prompt_to_mask-ultimate?style=flat&logo=googlecolab&logoColor=%23F9AB00&labelColor=%23000000&color=%2300A8F0)
 
-We've released a Colab version of this tool. Usage with GPU is suggested.
+We've released a Colab version of this tool.
+
+> [!TIP]
+> Usage with GPU is suggested.
 
 <img src="https://media.tenor.com/xJSM2Ky3WpgAAAAM/steve-ballmer-microsoft.gif" width="100" />
 
@@ -32,7 +35,9 @@ The transformers code has been updated following the tweak in this medium articl
 
 ## Installation
 MaskingDino has a pretty simple installation. We recommend using `venv` or `conda env` to isolate it.
-Disclaimer: Everything was tested on Apple Silicon Macs, we don't know the performances on Windows or non-ARM environments.
+
+> [!NOTE]
+> Everything was tested on Apple Silicon Macs, we don't know the performances on Windows or non-ARM environments.
 
 1. Clone the GitHub repository:
     ```bash
