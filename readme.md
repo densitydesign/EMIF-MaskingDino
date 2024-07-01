@@ -7,7 +7,7 @@ This repo is meant to highlight how to combine GroundingDino and Segment-Anythin
 # Colab version of this:
 ![Static Badge](https://img.shields.io/badge/Prompt_to_mask-ultimate?style=flat&logo=googlecolab&logoColor=%23F9AB00&labelColor=%23000000&color=%2300A8F0)
 
-We've released a Colab version of this tool.
+We've released a Colab version of this tool. Accessible [here](https://colab.research.google.com/drive/1iRw23Lt2s3mj0t5jjWFZj6z_hrWUassg#scrollTo=qEgiOFt6nbIC)
 
 > [!TIP]
 > Usage with GPU is suggested.
