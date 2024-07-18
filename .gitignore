@@ -149,7 +149,7 @@ tmp/
 
 GRID_CREATION/
 .DS_Store
-global_folder/
+global_folder/*
 !global_folder/.gitkeep
-model_folder/
+model_folder/*
 !model_folder/.gitkeep
