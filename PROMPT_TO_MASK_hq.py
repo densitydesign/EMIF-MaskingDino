@@ -45,8 +45,8 @@ else:
 print("Your current device is:", device)
 
 TEXT_THRESHOLD = 0.35
-global_folder = 'your_global_folder_path'  #substitute with your root path
-model_folder = 'your_model_folder_path'
+global_folder = 'global_folder'  #substitute with your root path
+model_folder = 'model_folder'
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
@@ -244,7 +244,7 @@ def process_images(root_folder, output_folder, start_from_zero=True):
 log_file = f'{global_folder}/process_log.txt'
 logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s %(message)s')
 root_folder = f'{global_folder}/INPUT_IMAGES' #FILE INPUT
-output_folder = f'/{global_folder}/OUTPUT_MASKS' #MAKS OUTPUT
+output_folder = f'{global_folder}/OUTPUT_MASKS' #MAKS OUTPUT
 
 # Process images with refinement enabled
 process_images(root_folder, output_folder, start_from_zero=True)
